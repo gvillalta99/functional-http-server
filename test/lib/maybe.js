@@ -1,10 +1,9 @@
-const test = require('tape')
+const tap = require('tap')
 const Maybe = require('../../lib/maybe')
 
-const Truthy = Maybe(x => x === true)
-test('maybe', (t) => {
-  t.equal(Truthy(true).fold(x => 'left', x => 'right'), 'right')
-  t.equal(Truthy(false).fold(x => 'left', x => 'right'), 'left')
-  t.end()
-})
+const Truthy = Maybe((x) => x === true)
 
+module.exports = {
+  Truthy: tap.equal(Truthy(true).map((_) => 'right').fold((x) => 'left', (x) => x), 'right'),
+  Falsey: tap.equal(Truthy(false).map((_) => 'right').fold((x) => 'left', (x) => 'right'), 'left')
+}

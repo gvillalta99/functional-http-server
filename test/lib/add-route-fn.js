@@ -8,6 +8,7 @@ const usersRoute     = addRouteFn({})('GET')('/users')('METHOD 2')
 const deepPath       = addRouteFn({})('GET')('/users/home/path')('METHOD 3')
 const postUsersPath  = addRouteFn(usersRoute)('POST')('/users')('METHOD 4')
 const postUsersPath2 = addRouteFn(postUsersPath)('POST')('/users')('METHOD 5')
+const getUserPath    = addRouteFn({})('GET')('/users/:id')('METHOD 6')
 
 module.exports = {
   'NULL ROUTE': tap.match(nullRoute,{
@@ -43,6 +44,14 @@ module.exports = {
     'users': {
       '#GET': ['METHOD 2'],
       '#POST': ['METHOD 4', 'METHOD 5']
+    }
+  }),
+  'GET /users/:id': tap.match(getUserPath, {
+    'users': {
+      '#param': {
+        '#name': 'id',
+        '#GET': ['METHOD 6']
+      }
     }
   })
 }
